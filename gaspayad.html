@@ -4,31 +4,179 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QUIZZEESSS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            background-color: #eebcd3;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        #quiz-container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        #options {
+            margin: 20px 0;
+        }
+        
+        label {
+            display: inline;
+            cursor: pointer;
+        }  
+        
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        
+        button {
+            background-color: #edc1e7;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+            
+        #score {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            color: #eaa5e5;
+        }     
+        
+        #message {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+    </style>
 </head>
 <body>  
-    <h1>QUIZ</h1>
-    <h2>1. What is HTML stands for?</h2>
-    <form id="form1">
-        <input type="radio" id="html" name="stands" value="html">
-        <label for="bsit">HYPER TEXT MARKUP LANGUAGE</label><br>
-        <input type="radio" id="css" name="stands" value="css">
-        <label for="bscs">Cascading Style Sheets</label><br>
-        <input type="radio" id="javasript" name="stands" value="js">
-        <label for="bsis">Javascript</label><br>
-        <button type="button" id="submit">Submit</button>
-    </form> 
-    <form id="form2">
-        <h2>2. What is HTML stands for? </h2>
-        <input type="radio" id="html" name="stands" value="html">
-        <label for="bsit">Hyper Text Markup Language</label><br>
-        <input type="radio" id="css" name="stands" value="css">
-        <label for="bscs">Cascading Style Sheets</label><br>
-        <input type="radio" id="javasript" name="stands" value="js">
-        <label for="bsis">Javascript</label><br>
-        <button type="button" id="submit">Submit</button>
-    </form>
-    <p id="result"></p>
-    <p id="score">Score: </p>
+    <h1>Quiz</h1>
+    
+    <div id="quiz-container">
+        <h2 id="question">Loading question...</h2>
+        <div id="options">
+            <input type="radio" id="option1" name="answer" value="0">
+            <label for="option1" id="label1">Option 1</label><br>
+            <input type="radio" id="option2" name="answer" value="1">
+            <label for="option2" id="label2">Option 2</label><br>
+            <input type="radio" id="option3" name="answer" value="2">
+            <label for="option3" id="label3">Option 3</label><br>
+        </div>
+        <button id="submit-btn">submit</button>
+        <button id="next-btn" style="display: none;">next</button>
+    </div>
+    <p id="score">Score: 0</p>
+    <p id="message"></p>
 
+    <script>
+        let currentQuestion = 0;
+        let score = 0;
+        const questions = [
+            {
+                question: "What does HTML stand for?",
+                options: ["Hyper Text Markup Language", "Cascading Style Sheets", "JavaScript"],
+                correct: 0
+            },
+            {
+                question: "What does CSS stand for?", 
+                options: ["Hyper Text Markup Language", "Cascading Style Sheets", "JavaScript"],
+                correct: 1
+            },
+            {
+                question: "Which is used for web interactivity?",
+                options: ["HTML", "CSS", "JavaScript"],
+                correct: 2
+            }
+        ];
+        
+        function displayquestion() {
+            document.getElementById("question").innerText = questions[currentQuestion].question;
+            document.getElementById("label1").innerText = questions[currentQuestion].options[0];
+            document.getElementById("label2").innerText = questions[currentQuestion].options[1];
+            document.getElementById("label3").innerText = questions[currentQuestion].options[2];
+            document.getElementById("option1").checked = false;
+            document.getElementById("option2").checked = false;
+            document.getElementById("option3").checked = false;
+            document.getElementById("message").innerText = "";
+        }
+        function checkAnswer() {
+            let selected = document.querySelector('input[name="answer"]:checked');   
+            if (!selected) {
+                alert("Please select an answer!");
+                return;
+            }
+            let userAnswer = Number(selected.value);
+            let correctAnswer = questions[currentQuestion].correct;
+            if (userAnswer === correctAnswer) {
+                score = score + 1; 
+                document.getElementById("message").innerText = "Correct!";
+            } else {
+                document.getElementById("message").innerText = "Wrong!";
+            }
+            document.getElementById("score").innerText = "Score: " + score;
+            document.getElementById("submit-btn").style.display = "none";
+            document.getElementById("next-btn").style.display = "block";
+        }
+        function nextquestion() {
+            currentQuestion = currentQuestion + 1;
+            if (currentQuestion < questions.length) {
+                displayquestion();
+                document.getElementById("submit-btn").style.display = "block";
+                document.getElementById("next-btn").style.display = "none";
+            } else {
+                finalscore();
+            }
+        }
+        function finalscore() {
+            document.getElementById("quiz-container").style.display = "none";
+            
+            let finalmessage = "";
+            if (score === 3) {
+                finalmessage = "Perfect! Great job!";
+            } else if (score <= 3) {
+                finalmessage = "You can do better!";
+            } else {
+                finalmessage = "Keep studying!";
+            }
+            document.getElementById("message").innerText = "Final Score:" + score + "/3" + finalmessage;
+        }
+        document.getElementById("submit-btn").addEventListener("click", function() {
+            checkAnswer();
+        });
+        document.getElementById("next-btn").addEventListener("click", function() {
+            nextquestion();
+        });
+        displayquestion();
+    </script>
 </body>
 </html>
