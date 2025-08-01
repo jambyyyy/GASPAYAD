@@ -2,39 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Document</title>
+    <title>Emoji</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            gap: 10px;
+            background-color:lightpink;
+            padding: 10px;
+        }
+        .grid-container > div {
+            background-color:white;
+            color: #000;
+            padding: 50px;
+            font-size: 40px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .emoji-buttons {
+            background-color: #f1f1f1;
+            padding: 20px;
+            text-align: center;
+        }
+        button {
+            font-size: 40px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<style>
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  gap: 10px;
-  background-color: rgb(233, 185, 217);
-  padding: 10px;
-}
-.grid-container > div {
-  background-color: #f1f1f1;
-  color: #000;
-  padding: 10px;
-  font-size: 30px;
-  text-align: center;
-}
-.emoji-buttons {
-    background-color: #f1f1f1;
-    padding: 50px;
-    justify-content: center;
 
-}
-</style>
 <body>
     <h1>Emoji</h1>
-    <div id="emoji-buttons"></div>
-        <button onclick="selectemoji ('&#128514;')">&#128514;</button>
-        <button onclick="selectemoji ('&#128513;')">&#128513;</button>
-        <button onclick="selectemoji ('	&#128517;')">&#128517;</button>
+    <div class="emoji-buttons" id="emoji-buttons">
+        <button onclick="selectemoji('&#128514;')">&#128514;</button>
+        <button onclick="selectemoji('&#128513;')">&#128513;</button>
+        <button onclick="selectemoji('&#128517;')">&#128517;</button>
+        <button onclick="selectemoji('&#128512;')">&#128512;</button>
+        <div>
+        <button onclick="selectemoji('&#128510;')">&#128510;</button>
+        <button onclick="selectemoji('&#128511;')">&#128511;</button>
+        <button onclick="selectemoji('&#128507;')">&#128507;</button>
+        <button onclick="selectemoji('&#128508;')">&#128508;</button>
+        </div>
     </div>
-    <div class="grid-container">
+
+    <div class="grid-container" id="grid">
         <div></div>
         <div></div>
         <div></div>  
@@ -43,8 +56,30 @@
         <div></div>
         <div></div>
         <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
     </div>
 
-    
+    <script>
+        let selectedemoji = '';
+        function selectemoji(emoji) {
+            selectedemoji = emoji;
+        }
+        const cells = document.querySelectorAll('.grid-container > div');
+        cells.forEach(cell => {
+            cell.addEventListener('click', function () {
+               if (this.innerHTML !== '') {
+                    this.innerHTML = ''; 
+                } else if (selectedemoji !== '') {
+                    this.innerHTML = selectedemoji;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
