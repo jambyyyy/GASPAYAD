@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 10px;
+  background-color: rgb(233, 185, 217);
+  padding: 10px;
+}
+.grid-container > div {
+  background-color: #f1f1f1;
+  color: #000;
+  padding: 10px;
+  font-size: 30px;
+  text-align: center;
+}
+.emoji-buttons {
+    background-color: #f1f1f1;
+    padding: 50px;
+    justify-content: center;
+
+}
+</style>
+<body>
+    <h1>Emoji</h1>
+    <div id="emoji-buttons"></div>
+        <button onclick="selectemoji ('&#128514;')">&#128514;</button>
+        <button onclick="selectemoji ('&#128513;')">&#128513;</button>
+        <button onclick="selectemoji ('	&#128517;')">&#128517;</button>
+    </div>
+    <div class="grid-container">
+        <div></div>
+        <div></div>
+        <div></div>  
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    
+</body>
+</html>
